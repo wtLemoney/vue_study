@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>购物车</title>
+    <meta charset="utf-8">
+    <meta content="IE=dege,chrom=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <!-- <title>Cart</title> -->
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/checkout.css" rel="stylesheet">
+    <link href="css/modal.css" rel="stylesheet">
+    <style type="text/css">
+        .quentity input {
+            width: 40px;
+            padding: 5px 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout">
+      <div id="app">
+        
+        <div class="container">
+          <div class="cart">
+            <div class="checkout-title">
+              <span>购物车</span>
+            </div>
+
+            <!-- table -->
+            <div class="item-list-wrap">
+              <div class="cart-item">
+                <!-- 购物车头部 -->
+                <div class="cart-item-head">
+                  <ul>
+                    <li>商品信息</li>
+                    <li>商品金额</li>
+                    <li>商品数量</li>
+                    <li>金额</li>
+                    <li>编辑</li>
+                  </ul>
+                </div>
+                <!-- 每个商品 -->
+                <ul class="cart-item-list">
+                  <li v-for="item in productList">
+                    <!-- 商品信息 -->
+                    <div class="cart-tab-1">
+                      <div class="cart-item-check">
+                        <a href="javascript:void 0" class="item-check-btn" v-bind:class="{check:item.checked}" v-on:click="selectProduct(item)">
+                          <svg class="icon icon-ok"><use xlink:href="#icon-ok"></use></svg>
+                        </a>
+                      </div>
+                      <div class="cart-item-pic">
+                        <img v-bind:src="item.productImage" alt="item.productName">
+                      </div>
+                      <div class="cart-item-title">
+                        <div class="item-name">{{item.productName}}</div>
+                      </div>
+                      <div class="item-include">
+                        <dl>
+                          <dt>赠送:</dt>
+                          <dd v-for="part in item.parts">{{part.partsName}}</dd>
+                        </dl>
+                      </div>
+                    </div>
+                    <!-- 商品金额 -->
+                    <div class="cart-tab-2">
+                      <div class="item-price">{{item.productPrice}}</div>
+                    </div>
+                    <!-- 商品数量 -->
+                    <div class="cart-tab-3">
+                      <div class="item-quantity">
+                        <div class="select-self select-self-open">
+                          <div class="quantity">
+                            <a href="javascript:void 0" v-on:click="changeMoney(item,-1);computedPrice()" >-</a>
+                            <input type="text" value="0" disabled v-model="item.productQuantity">
+                            <a href="javascript:void 0" v-on:click="changeMoney(item,1);computedPrice()">+</a>
+                          </div>
+                        </div>
+                        <div class="item-stock">有货</div>
+                      </div>
+                    </div>
+                    <!-- 金额 -->
+                    <div class="cart-tab-4">
+                      <div class="item-price-total">{{computedSingle(item)|format('元')}}</div>
+                    </div>
+                    <!-- 编辑 -->
+                    <div class="cart-tab-5">
+                      <div class="cart-item-operation">
+                        <a href="javascript:void 0" class="item-edit-btn" v-on:click="delConfirm(item)">删除</a>
+                      </div>
+                    </div>
+
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+
+            <!-- footer -->
+            <div class="cart-foot-wrap">
+
+              <div class="cart-foot-l">
+                <!-- 全选 -->
+                <div class="item-all-check">
+                  <a href="javascript:void 0" >
+                    <span v-on:click="checkAll(true)">全选</span>
+                  </a>
+                </div>
+                <!-- 取消全选 -->
+                <div class="item-all-del">
+                  <a href="javascript:void 0" class="item-del-btn">
+                    <span v-on:click="checkAll(false)">&nbsp;&nbsp;&nbsp;取消全选</span>
+                  </a>
+                </div>
+              </div><!-- cart-foot-l -->
+
+              <div class="cart-foot-r">
+                <div class="item-total">
+                  总计: <span class="total-price">{{totalActMoney|format('元')}}</span>
+                </div>
+                <div class="next-btn-wrap">
+                  <a href="address.html" class="btn btn--red">结账</a>
+                </div>
+              </div><!-- cart-foot-r -->
+            </div> <!-- /cart-foot-wrap -->
+            <!-- footer结束 -->
+
+          </div><!-- /cart -->
+        </div>
+        <!-- /container -->
+
+        <!-- 弹出框 -->
+        <div class="md-modal modal-msg md-modal-transition" id="showModal" v-bind:class="{'md-show':zoomFlag}">
+          <div class="md-modal-inner">
+            <div class="md-top">
+              <button class="md-close" v-on:click="zoomFlag=false">关闭</button>
+            </div>
+            <div class="md-content">
+              <div class="confirm-tips">
+                <p id="cusLanInfo">你确认删除此订单信息吗?</p>
+              </div>
+              <div class="btn-wrap col-2">
+                <button class="btn btn--m" id="btnModalConfirm" v-on:click="deleteItem()">Yes</button>
+                <button class="btn btn--m btn--red" id="btnModalCancel" v-on:click="zoomFlag=false">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 弹出框时，页面背景样式 -->
+        <div class="md-overlay" v-if="zoomFlag"></div>
+
+      </div><!-- /app -->
+    </div><!-- /checkout -->
+
+    <script src="js/vue.js"></script>
+    <!-- <script src="js/lib/vue-resource.js"></script> -->
+    <script src="js/cart.js"></script>
+</body>
+</html>
