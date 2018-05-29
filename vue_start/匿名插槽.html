@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue学习-匿名插槽</title>
+    <script src="./vue.js"></script>
+    <style>
+     
+    </style>
+</head>
+<body>
+    <div id="root">
+        <my-slot>替换的内容</my-slot>
+    </div>
+
+<template id="my_slot">
+        <div id="panel">
+                <h2 class="panel-header">插槽的头部</h2>
+                <!-- 预留一个插槽 -->
+                <slot>可以替换任何标签</slot>
+                <footer>插槽的尾部</footer>
+            </div>
+</template>
+
+    <script>
+
+       Vue.component('my-slot',{
+           template:"#my_slot"
+       })
+
+        let vm=new Vue({
+            el: "#root",
+            data:{
+
+            },
+            methods:{
+
+            }
+        })
+    </script>
+</body>
+</html>

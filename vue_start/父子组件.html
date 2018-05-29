@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue学习-父子组件</title>
+    <script src="./vue.js"></script>
+    <style>
+     
+    </style>
+</head>
+<body>
+    <div id="root">
+        <parent></parent>
+    </div>
+
+    <script>
+        //1.子组件构造器
+        let Child1=Vue.extend({
+            template:`<p>孩子1111</p>`
+        })
+        let Child2=Vue.extend({
+            template:`<p>孩子2222</p>`
+        })
+
+        //2.父组件构造器
+       Vue.component('parent',{
+           components:{//这里注意，在父组件里注册子组件
+               'my-child1':Child1,
+               'my-child2':Child2
+           },
+           template:`
+                <div>
+                    <my-child1></my-child1>
+                    <my-child2></my-child2>
+                </div>
+           `
+       })
+
+        let vm=new Vue({
+            el: "#root",
+            data:{
+
+            },
+            methods:{
+
+            }
+        })
+    </script>
+</body>
+</html>

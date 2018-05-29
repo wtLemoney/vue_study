@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue学习-全局组件</title>
+    <script src="./vue.js"></script>
+    <style>
+     
+    </style>
+</head>
+<body>
+    <div id="root">
+            <my-date></my-date>
+    </div>
+
+    <script>
+
+         let Profile = Vue.extend({
+            template:`
+                <div>
+                    <input type="date">
+                    <p>今天天气好</p>
+                </div>
+            `
+        });
+       
+
+        let vm=new Vue({
+            el: "#root",
+            data:{
+
+            },
+            components:{
+                'my-date': Profile
+            }
+        })
+    </script>
+</body>
+</html>
