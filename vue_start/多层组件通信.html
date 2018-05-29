@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue学习-组件通信</title>
+    <script src="./vue.js"></script>
+    <style>
+     
+    </style>
+</head>
+<body>
+    <div id="root">
+        <my-parent :titlea="title1" :titleb="title2"></my-parent>
+    </div>
+
+    <template id="my_title1">
+        <h1>{{title1}}</h1>
+    </template>
+
+    <template id="my_title2">
+        <p>{{title2}}</p>
+    </template>
+
+    <template id="my_parent">
+            <div>
+                <Child1 :title1="titlea"></Child1>
+                <Child2 :title2="titleb"></Child2>
+            </div>
+    </template>
+
+    <script>
+        let Child1=Vue.extend({
+            template:'#my_title1',
+            props:['title1']
+        })
+        let Child2=Vue.extend({
+            template:'#my_title2',
+            props:['title2']
+        })
+
+
+       Vue.component('my-parent',{
+           template:'#my_parent',
+           props:['titlea','titleb'],
+           components:{
+               'child1':Child1,
+               'child2':Child2
+           }
+       })
+
+        let vm=new Vue({
+            el: "#root",
+            data:{
+                title1:"哈哈哈哈",
+                title2:"hahhaha"
+            },
+            methods:{
+
+            }
+        })
+    </script>
+</body>
+</html>

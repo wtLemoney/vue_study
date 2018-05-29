@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue学习-计算属性</title>
+    <script src="./vue.js"></script>
+    <style>
+     
+    </style>
+</head>
+<body>
+    <div id="root">
+        <p>初始值：{{fullName}}</p>
+        <button @click="deal()">调用计算属性setter方法</button>
+    </div>
+
+    <script>
+
+       
+
+        let vm=new Vue({
+            el: "#root",
+            data:{
+                firstName:"Rose",
+                lastName:"Jack"
+            },
+            methods:{
+                deal(){
+                    this.fullName = '姓 名'
+                }
+            },
+            //计算选项
+            computed:{
+                // fullName(){
+                //     return this.firstName+' '+this.lastName;
+                // }
+                fullName:{
+                    get(){
+                        return this.firstName+' '+this.lastName;
+                    },
+                    set(str){
+                        let nameArr = str.split(" ");
+                        this.firstName = nameArr[0];
+                        this.lastName = nameArr[1];
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
